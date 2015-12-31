@@ -1632,8 +1632,11 @@ ngx_http_push_stream_ntohll(uint64_t value) {
     if (*(char *)&num == 42) {
         uint32_t high_part = ntohl((uint32_t)(value >> 32));
         uint32_t low_part = ntohl((uint32_t)(value & 0xFFFFFFFFLL));
-        return (((uint64_t)low_part) << 32) | high_part;
+        uint64_t result = (((uint64_t)low_part) << 32) | high_part;
+        ngx_log_error(NGX_LOG_ERR, ngx_cycle->log, 0, "push stream module: FRAME_SIZE = LITTLE payload_len received: %016XL / %ui, result: %016XL / %ui", value, value, result, result);
+        return result;
     } else {
+        ngx_log_error(NGX_LOG_ERR, ngx_cycle->log, 0, "push stream module: FRAME_SIZE = BIG payload_len received: %016XL / %ui", value, value);
         return value;
     }
 }

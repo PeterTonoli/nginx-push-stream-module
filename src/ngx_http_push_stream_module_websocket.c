@@ -276,7 +276,7 @@ ngx_http_push_stream_websocket_reading(ngx_http_request_t *r)
                         }
 
                         if ((ctx->frame->payload = ngx_pcalloc(ctx->temp_pool, ctx->frame->payload_len)) == NULL) {
-                            ngx_log_error(NGX_LOG_ERR, r->connection->log, 0, "push stream module: unable to allocate memory for payload");
+                            ngx_log_error(NGX_LOG_ERR, r->connection->log, 0, "push stream module: unable to allocate memory for payload for %ui bytes", ctx->frame->payload_len);
                             goto finalize;
                         }
 
